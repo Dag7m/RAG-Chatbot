@@ -52,17 +52,41 @@ This project implements an **end-to-end RAG pipeline**:
 
 ---
 
-## 🏗️ Architecture Stack
+---
 
-### Backend Structure
-* **Python FastApi Layer (`main.py`)**: Root logic mapping `upload`, `chat`, and `history` routing endpoints.
-* **LangChain & ChromaDB Frameworks (`retrieval/` & `ingestion/`)**: Connects Vector Embeddings (`HuggingFace`) securely to the Local DB cache safely using explicit file management logic.
+## 🏗️ Architecture Stack & System Components
 
-### Frontend
-* **ReactJS**: React App configured at `/ui/src` with `axios` bindings.
-* **Premium CSS Interface**: Located natively in `App.css`.
+### Execution Flow
+- `ui/src/App.js`: The front-facing React app handling user inputs, rapid file uploads, and tracking visual chat loops dynamically via glassmorphic aesthetics.
+- `main.py`: The entry hub. Contains API routing (`/chat`, `/upload`, `/history`). Handlers orchestrate the pipelines below incrementally.
+- `ingestion/loader.py`: Extracts unstructured text from raw files (`.txt`, `.pdf`, `.png`, `.jpg`). Multimodal image data is instantly narrated natively by Gemini Vision here.
+- `ingestion/chunker.py`: Implements advanced LangChain `SemanticChunker` logic. Replaces rudimentary sentence splitting with ML-driven embedding gap calculations!
+- `ingestion/pipeline.py`: Embeds the semantic chunks into numerical vectors and commits them to the local Vector Database incrementally.
+- `retrieval/retriever.py`: Takes user queries, transforms them into comparable vectors, and extracts highly-correlated, previously archived chunks from the database!
+- `retrieval/generator.py`: Feeds the retrieved chunks and the user's prompt directly to `Gemini-2.5-flash`. The prompt has been refined to enforce concise, conversational RAG narration while hiding metadata.
+- `utils/memory.py`: Tracks raw chat history objects seamlessly within a simple local `.json` file (`chat_history.json`).
 
 ---
+
+## 🧠 Core RAG Concepts Addressed
+
+### 1. Data Persistence (Chroma DB)
+Data persists seamlessly through restarts because the backend operates heavily on Local Disk States!
+When a file is ingested, `Chroma` writes the spatial embeddings to the `chroma_db/` SQLite-based directory.
+When you close your app and kill the backend, the `chroma_db/` folder remains preserved safely. Upon restarting, `retriever.py` initializes by explicitly pointing at `persist_directory="chroma_db"`, ensuring everything ingested previously remains exactly accessible!
+
+### 2. The Multimodal Approach (Textualization)
+True native Multimodal RAG relies on *Multimodal Embeddings* (e.g., CLIP by OpenAI) which convert image pixels directly into vectors. However, image-heavy vectors increase compute load significantly and make similarity matching computationally heavy for local dev. 
+Because this engine specifically utilizes `ChromaDB` alongside HuggingFace `all-MiniLM-L6-v2` semantic models (which expect text vectors), treating `Gemini 2.5 Flash` as an **Ingestion Oracle** to convert deep visual representations into verbose native text descriptions handles edge cases brilliantly. This achieves full multimodality (Textualization) cleanly!
+
+### 3. Source Accountability
+A large piece of what makes our RAG so powerful is explainability.
+When asking a question:
+1. The Retriever queries the database and grabs `k=3` matching Documents.
+2. The Generator logically wraps these 3 documents inside the invisible `system prompt` sent to Gemini.
+3. Simultaneously, the framework aggregates the raw strings that were matched into a JSON array boundary. 
+4. This list is passed straight back to the React UI `App.js`!
+5. `App.js` gracefully enumerates these verbatim strings explicitly inside the **Sources:** interface panel!
 
 ## 🛠️ Setup Instructions
 

@@ -9,6 +9,6 @@ def get_retriever():
         embedding_function=embedding
     )
 
-    retriever = vectordb.as_retriever(search_kwargs={"k": 3})
+    retriever = vectordb.as_retriever(search_kwargs={"k": 10})
 
     return retriever

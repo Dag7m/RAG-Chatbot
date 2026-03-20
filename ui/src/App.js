@@ -17,17 +17,18 @@ function App() {
   const sendMessage = async () => {
     if (!query.trim()) return;
 
-    const userMessage = { type: "user", text: query };
+    const currentQuery = query; // Capture scope before state clear
+    const userMessage = { type: "user", text: currentQuery };
     setMessages((prev) => [...prev, userMessage]);
 
+    setQuery(""); // ⚡ Instantly clear input field
     setLoading(true);
 
     try {
       const res = await axios.post("http://127.0.0.1:8000/chat", {
-        query: query,
+        query: currentQuery,
       });
 
-      // ✅ THIS is where botMessage goes
       const botMessage = {
         type: "bot",
         text: res.data.response,
@@ -40,7 +41,6 @@ function App() {
     }
 
     setLoading(false);
-    setQuery("");
   };
   useEffect(() => {
     const loadHistory = async () => {

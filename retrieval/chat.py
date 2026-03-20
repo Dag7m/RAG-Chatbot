@@ -3,11 +3,15 @@ from retrieval.generator import generate_answer
 from utils.memory import add_to_history, get_history_text
 
 def ask_question(query):
-    retriever = get_retriever()  # 🔥 ALWAYS refresh
+    retriever = get_retriever()  # ALWAYS refresh
 
     docs = retriever.invoke(query)
 
-    context = "\n".join([doc.page_content for doc in docs])
+    context_parts = []
+    for doc in docs:
+        source = doc.metadata.get("source", "Unknown Source")
+        context_parts.append(f"Source: {source}\n{doc.page_content}\n")
+    context = "\n".join(context_parts)
 
     history_text = get_history_text()
 

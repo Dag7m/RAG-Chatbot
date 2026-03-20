@@ -21,11 +21,11 @@ def load_documents(data_path="data/", file_path=None):
     for path in files_to_process:
         file = os.path.basename(path)
 
-        if file.endswith(".txt"):
+        if file.lower().endswith(".txt"):
             loader = TextLoader(path)
             documents.extend(loader.load())
 
-        elif file.endswith(".pdf"):
+        elif file.lower().endswith(".pdf"):
             try:
                 loader = PyPDFLoader(path)
                 documents.extend(loader.load())
