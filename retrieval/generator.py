@@ -10,9 +10,9 @@ model = genai.GenerativeModel("gemini-2.5-flash")
 
 def generate_answer(query, context):
     prompt = f"""
-You are a helpful assistant.
-
-Use the context below to answer the question.
+You are an intelligent, friendly AI assistant.
+Your goal is to answer the user's question directly and conversationally using ONLY the provided context.
+When discussing files or images, talk about them naturally based on the provided descriptions. Do NOT leak raw metadata formats, rigid descriptions, or internal system formatting.
 
 Context:
 {context}

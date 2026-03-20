@@ -20,3 +20,4 @@ htmlcov/
 ui/node_modules
 chat_history.json
 chroma_db
+data

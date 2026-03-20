@@ -2,9 +2,9 @@ from retrieval.retriever import get_retriever
 from retrieval.generator import generate_answer
 from utils.memory import add_to_history, get_history_text
 
-retriever = get_retriever()
-
 def ask_question(query):
+    retriever = get_retriever()  # 🔥 ALWAYS refresh
+
     docs = retriever.invoke(query)
 
     context = "\n".join([doc.page_content for doc in docs])
@@ -23,4 +23,6 @@ Retrieved Context:
 
     add_to_history(query, answer)
 
-    return answer
+    sources = [doc.page_content for doc in docs]
+
+    return answer, sources
