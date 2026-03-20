@@ -1,0 +1,22 @@
+# Python bytecode, builds, and dependencies
+__pycache__/
+*.py[cod]
+build/
+dist/
+*.egg-info/
+venv/
+.env
+
+# Tests and Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# IDE/Editor settings
+.vscode/
+.idea/
+.DS_Store
+
+ui/node_modules
+chat_history.json
+chroma_db

@@ -1,0 +1,2 @@
+Retrieval-Augmented Generation (RAG) improves LLM responses by retrieving external knowledge.
+It helps reduce hallucinations and provides accurate answers.
