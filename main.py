@@ -44,7 +44,8 @@ async def upload_file(file: UploadFile = File(...)):
     # ✅ Add upload event to history
     add_to_history(
         f"I uploaded a file: {file.filename}",
-        f"File '{file.filename}' processed and added to the knowledge base."
+        f"File '{file.filename}' processed and added to the knowledge base.",
+        []
     )
 
     return {"message": f"File '{file.filename}' uploaded and processed successfully", "filename": file.filename}

@@ -25,8 +25,8 @@ Retrieved Context:
 
     answer = generate_answer(query, full_context)
 
-    add_to_history(query, answer)
+    sources = [doc.page_content for doc in docs[:2]]
 
-    sources = [doc.page_content for doc in docs]
+    add_to_history(query, answer, sources)
 
     return answer, sources

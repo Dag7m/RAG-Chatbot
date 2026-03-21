@@ -51,7 +51,11 @@ function App() {
 
         res.data.history.forEach((item) => {
           formatted.push({ type: "user", text: item.user });
-          formatted.push({ type: "bot", text: item.assistant });
+          formatted.push({ 
+            type: "bot", 
+            text: item.assistant, 
+            sources: item.sources || [] 
+          });
         });
 
         setMessages(formatted);
@@ -119,9 +123,9 @@ function App() {
             <div>{msg.text}</div>
 
             {/* ✅ SHOW SOURCES ONLY FOR BOT */}
-            {msg.type === "bot" && msg.sources && (
+            {msg.type === "bot" && msg.sources && msg.sources.length > 0 && (
               <div className="sources">
-                <b>Sources:</b>
+                <b>Sources (Top 2 Closest Matches):</b>
                 {msg.sources.map((src, idx) => (
                   <p key={idx}>{src}</p>
                 ))}

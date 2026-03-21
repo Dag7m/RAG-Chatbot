@@ -16,10 +16,10 @@ def save_history(history):
         json.dump(history, f, indent=2)
 
 
-def add_to_history(user, assistant):
+def add_to_history(user, assistant, sources=None):
     history = load_history()
     
-    history.append({"user": user, "assistant": assistant})
+    history.append({"user": user, "assistant": assistant, "sources": sources or []})
     
     save_history(history)
 
